@@ -64,7 +64,7 @@ bool AFocuserDriver::Connect()
   tty.c_cc[VMIN]   =  1;                  // read doesn't block
   tty.c_cc[VTIME]  =  5;                  // 0.5 seconds read timeout
   tty.c_cflag     |=  CREAD | CLOCAL;     // turn on READ & ignore ctrl lines
-
+  tty.c_cflag &= ~HUPCL;   // disable hang-up-on-close to avoid reset
   /* Make raw */
   cfmakeraw(&tty);
 
@@ -135,6 +135,7 @@ std::string AFocuserDriver::wait_read(){
   memset(response, '\0', sizeof response);
 
   do {
+    IDLog("reading\n");
     n = read( fd, &buf, 1 );
     sprintf( &response[spot], "%c", buf );
     spot += n;

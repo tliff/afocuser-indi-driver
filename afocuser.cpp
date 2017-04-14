@@ -75,7 +75,7 @@ void ISSnoopDevice (XMLEle *root)
 AFocuser::AFocuser()
 {
     ticks=0;
-    driver = new AFocuserDriver("/dev/ttyUSB0");
+    driver = new AFocuserDriver("/dev/focuser");
     //SetFocuserCapability(FOCUSER_CAN_ABS_MOVE | FOCUSER_CAN_REL_MOVE | FOCUSER_CAN_ABORT | FOCUSER_HAS_VARIABLE_SPEED);
     SetFocuserCapability(FOCUSER_CAN_REL_MOVE);
 }
@@ -90,7 +90,6 @@ bool AFocuser::Connect()
 {
     SetTimer(1000);     //  start the timer
     driver->Connect();
-    driver->move(6200);
     return true;
 }
 
@@ -102,7 +101,7 @@ AFocuser::~AFocuser()
 
 const char * AFocuser::getDefaultName()
 {
-        return (char *)"Focuser Simulator";
+        return (char *)"AFocuser";
 }
 
 bool AFocuser::initProperties()

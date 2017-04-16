@@ -66,11 +66,13 @@ class AFocuserDriver
     bool move(int steps);
 
     void setDebug(bool enable) { debug = enable; }
+    bool isConnected(){return this->fd != -1;}
 
 private:
     bool debug;
     std::string device;
     int fd;
+
 
     bool write_blocking(std::string);
     void write(std::string s);

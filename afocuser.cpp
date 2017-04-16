@@ -89,8 +89,7 @@ bool AFocuser::SetupParms()
 bool AFocuser::Connect()
 {
     SetTimer(1000);     //  start the timer
-    driver->Connect();
-    return true;
+    return driver->Connect();
 }
 
 AFocuser::~AFocuser()

@@ -91,11 +91,8 @@ bool AFocuserDriver::move(int steps)
     command += std::to_string(steps);
     command += '\n';
 
-   IDLog("move command value is %s\n", command.c_str());
-
    rc = write_blocking(command);
 
-   IDLog("startPulse returns %d\n",rc);
    if(rc==1)
       return true;
 
@@ -106,20 +103,16 @@ bool AFocuserDriver::move(int steps)
 
 bool AFocuserDriver::write_blocking(std::string s){
   this->write(s);
-  IDLog("Waiting for confirmation\n");
-  IDLog("FD is %i\n", this->fd);
   std::string res = this->wait_read();
   return res == "OK\n";
 }
 
 void AFocuserDriver::write(std::string s){
-  IDLog("writing %s\n", s.c_str());
   const char *cmd = s.c_str();
   int n_written = 0,
   spot = 0;
 
   do {
-    IDLog("Writing %d\n", cmd[spot]);
     n_written = ::write( fd, &cmd[spot], 1 );
     spot += n_written;
   } while (spot != s.length() && n_written > 0);
@@ -135,7 +128,6 @@ std::string AFocuserDriver::wait_read(){
   memset(response, '\0', sizeof response);
 
   do {
-    IDLog("reading\n");
     n = read( fd, &buf, 1 );
     sprintf( &response[spot], "%c", buf );
     spot += n;

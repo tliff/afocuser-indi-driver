@@ -77,7 +77,7 @@ AFocuser::AFocuser()
     ticks=0;
     driver = new AFocuserDriver("/dev/focuser");
     //SetFocuserCapability(FOCUSER_CAN_ABS_MOVE | FOCUSER_CAN_REL_MOVE | FOCUSER_CAN_ABORT | FOCUSER_HAS_VARIABLE_SPEED);
-    SetFocuserCapability(FOCUSER_CAN_REL_MOVE);
+    FI::SetCapability(FOCUSER_CAN_REL_MOVE);
 }
 
 bool AFocuser::SetupParms()
